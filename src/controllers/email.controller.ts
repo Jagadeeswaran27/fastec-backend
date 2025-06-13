@@ -3,9 +3,16 @@ import { Request, Response } from "express";
 import { transporter } from "../services/mail.service";
 
 export const contactForm = async (req: Request, res: Response) => {
-  const { firstName, lastName, email, phone, message } = req.body;
+  const { firstName, lastName, email, phoneNumber, businessRequirements } =
+    req.body;
 
-  if (!firstName || !lastName || !email || !phone || !message) {
+  if (
+    !firstName ||
+    !lastName ||
+    !email ||
+    !phoneNumber ||
+    !businessRequirements
+  ) {
     res.status(400).json({ error: "All fields are required" });
     return;
   }
@@ -19,8 +26,8 @@ export const contactForm = async (req: Request, res: Response) => {
         <h3>New Contact Form Submission</h3>
         <p><strong>Name:</strong> ${firstName} ${lastName}</p>
         <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Phone:</strong> ${phone}</p>
-        <p><strong>Message:</strong><br>${message}</p>
+        <p><strong>Phone:</strong> ${phoneNumber}</p>
+        <p><strong>Business Requirements:</strong><br>${businessRequirements}</p>
       `,
     });
     res.status(200).json({ message: "Email sent successfully" });
